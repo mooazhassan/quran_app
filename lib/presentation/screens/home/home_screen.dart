@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
           type: BottomNavigationBarType.shifting,
           items: [
             BottomNavigationBarItem(
-              backgroundColor: ColorsManger.goldColor,
+                backgroundColor: ColorsManger.goldColor,
                 icon: ImageIcon(AssetImage(AssetsManager.quranIcon), size: 40),
                 label: StringsManager.quranLabel),
             BottomNavigationBarItem(

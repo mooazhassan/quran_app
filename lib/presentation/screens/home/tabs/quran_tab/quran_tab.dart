@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quran_app/core/assets_manager.dart';
 import 'package:quran_app/core/colors_manger.dart';
 import 'package:quran_app/core/strings_manager.dart';
-import 'package:quran_app/presentation/screens/home/tabs/quran_tab/quran_item_widget.dart';
-import 'package:quran_app/presentation/screens/home/tabs/quran_tab/quran_tab_header_widget.dart';
+import 'package:quran_app/presentation/screens/home/tabs/quran_tab/widgets/quran_item_widget.dart';
+import 'package:quran_app/presentation/screens/home/tabs/quran_tab/widgets/quran_tab_header_widget.dart';
 
 class QuranTab extends StatelessWidget {
   QuranTab({super.key});
@@ -252,8 +252,11 @@ class QuranTab extends StatelessWidget {
           flex: 3,
           child: ListView.separated(
               itemBuilder: (context, index) => QuranItemWidget(
-                  suraName: suraNames[index],
-                  versesNumber: versesNumber[index].toString()),
+                    suraItem: SuraItem(
+                        suraName: suraNames[index],
+                        versesNumber: versesNumber[index].toString(),
+                        index: index),
+                  ),
               separatorBuilder: (context, index) => Container(
                     width: double.infinity,
                     height: 3,

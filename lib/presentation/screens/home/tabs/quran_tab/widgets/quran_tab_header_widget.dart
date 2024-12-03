@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/assets_manager.dart';
-import '../../../../../core/colors_manger.dart';
-import '../../../../../core/strings_manager.dart';
+import '../../../../../../core/assets_manager.dart';
+import '../../../../../../core/colors_manger.dart';
+import '../../../../../../core/strings_manager.dart';
 
 class QuranTabHeaderWidget extends StatelessWidget {
   const QuranTabHeaderWidget({super.key});
