@@ -33,7 +33,7 @@ class MyTheme {
     ),
     cardTheme: CardTheme(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      color: ColorsManger.goldColor,
+      color: ColorsManger.goldColor.withOpacity(0.8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
