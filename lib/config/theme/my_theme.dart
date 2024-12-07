@@ -11,7 +11,7 @@ class MyTheme {
           fontWeight: FontWeight.w400, fontSize: 50, color: Colors.black),
     ),
     scaffoldBackgroundColor: Colors.transparent,
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    bottomNavigationBarTheme:const BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Colors.black,
       unselectedItemColor: Colors.white,
@@ -19,7 +19,17 @@ class MyTheme {
       showUnselectedLabels: false,
       backgroundColor: ColorsManger.goldColor,
     ),
-    textTheme: TextTheme(
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: ColorsManger.goldColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+      ),
+      elevation: 20,
+    ),
+    textTheme:const TextTheme(
       labelMedium: TextStyle(
         fontSize: 21,
         fontWeight: FontWeight.w500,
@@ -30,6 +40,8 @@ class MyTheme {
         fontWeight: FontWeight.w600,
         color: Color(0xff242424),
       ),
+      bodyLarge: TextStyle(
+          fontSize: 25, fontWeight: FontWeight.w500, color: Colors.black),
     ),
     cardTheme: CardTheme(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
