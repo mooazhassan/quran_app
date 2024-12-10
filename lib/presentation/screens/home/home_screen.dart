@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quran_app/core/assets_manager.dart';
 import 'package:quran_app/core/colors_manger.dart';
 import 'package:quran_app/core/strings_manager.dart';
@@ -7,6 +8,10 @@ import 'package:quran_app/presentation/screens/home/tabs/quran_tab/quran_tab.dar
 import 'package:quran_app/presentation/screens/home/tabs/radio_tab/radio_tab.dart';
 import 'package:quran_app/presentation/screens/home/tabs/sebha_tab/sebha_tab.dart';
 import 'package:quran_app/presentation/screens/home/tabs/settings_tab/settings_tab.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:quran_app/providers/hadith_provider.dart';
+
+import '../../../providers/settings_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -20,7 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> tabs = [
     QuranTab(),
-    HadithTab(),
+    ChangeNotifierProvider(
+        create: (context) => HadithProvider(), child: HadithTab()),
     SebhaTab(),
     RadioTab(),
     SettingsTab(),
@@ -28,49 +34,56 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var myProvider = Provider.of<SettingsProvider>(context);
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-              fit: BoxFit.fill, image: AssetImage(AssetsManager.lightMainBg))),
+              fit: BoxFit.fill,
+              image: AssetImage(myProvider.isLight()
+                  ? AssetsManager.lightMainBg
+                  : AssetsManager.darkMainBg))),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(StringsManager.appTitle),
+          title: Text(AppLocalizations.of(context)!.titleApp),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.shifting,
-          items: [
-            BottomNavigationBarItem(
-                backgroundColor: ColorsManger.goldColor,
-                icon: ImageIcon(AssetImage(AssetsManager.quranIcon), size: 40),
-                label: StringsManager.quranLabel),
-            BottomNavigationBarItem(
-                backgroundColor: ColorsManger.goldColor,
-                icon: ImageIcon(AssetImage(AssetsManager.hadithIcon), size: 40),
-                label: StringsManager.hadithLabel),
-            BottomNavigationBarItem(
-                backgroundColor: ColorsManger.goldColor,
-                icon: ImageIcon(
-                  AssetImage(AssetsManager.sebhaIcon),
-                  size: 40,
-                ),
-                label: StringsManager.sebhaLabel),
-            BottomNavigationBarItem(
-                backgroundColor: ColorsManger.goldColor,
-                icon: ImageIcon(AssetImage(AssetsManager.radioIcon), size: 40),
-                label: StringsManager.radioLabel),
-            BottomNavigationBarItem(
-                backgroundColor: ColorsManger.goldColor,
-                icon: Icon(
-                  Icons.settings,
-                  size: 40,
-                ),
-                label: StringsManager.settingLabel)
-          ],
-          currentIndex: selectedindx,
-          onTap: (indx) {
-            selectedindx = indx;
-            setState(() {});
-          },
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: Theme.of(context).primaryColor,
+          ),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.shifting,
+            items: [
+              BottomNavigationBarItem(
+                  icon:
+                      ImageIcon(AssetImage(AssetsManager.quranIcon), size: 40),
+                  label: AppLocalizations.of(context)!.quranTab),
+              BottomNavigationBarItem(
+                  icon:
+                      ImageIcon(AssetImage(AssetsManager.hadithIcon), size: 40),
+                  label: AppLocalizations.of(context)!.hadithTab),
+              BottomNavigationBarItem(
+                  icon: ImageIcon(
+                    AssetImage(AssetsManager.sebhaIcon),
+                    size: 40,
+                  ),
+                  label: AppLocalizations.of(context)!.sebhaTab),
+              BottomNavigationBarItem(
+                  icon:
+                      ImageIcon(AssetImage(AssetsManager.radioIcon), size: 40),
+                  label: AppLocalizations.of(context)!.radioTab),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.settings,
+                    size: 40,
+                  ),
+                  label: AppLocalizations.of(context)!.settingsTab)
+            ],
+            currentIndex: selectedindx,
+            onTap: (indx) {
+              selectedindx = indx;
+              setState(() {});
+            },
+          ),
         ),
         body: tabs[selectedindx],
       ),

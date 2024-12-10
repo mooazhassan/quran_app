@@ -29,7 +29,6 @@ class QuranItemWidget extends StatelessWidget {
             ),
             VerticalDivider(
               width: 3,
-              color: ColorsManger.goldColor,
               thickness: 3,
             ),
             Expanded(

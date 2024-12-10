@@ -1,10 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../../../providers/settings_provider.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
   const LanguageBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var myProvider = Provider.of<SettingsProvider>(context);
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -14,11 +20,27 @@ class LanguageBottomSheet extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-           buildSelcetedLanguageWidget(context, 'English'),
+            InkWell(
+              onTap: () {
+                myProvider.changeAppLanguage('en');
+                log(myProvider.language);
+              },
+              child: myProvider.isEnglish()
+                  ? buildSelcetedLanguageWidget(context, 'English')
+                  : buildUnSelcetedLanguageWidget(context, 'English'),
+            ),
             SizedBox(
               height: 20,
             ),
-           buildUnSelcetedLanguageWidget(context, 'العربيه')
+            InkWell(
+              onTap: () {
+                myProvider.changeAppLanguage('ar');
+                log(myProvider.language);
+              },
+              child: !myProvider.isEnglish()
+                  ? buildSelcetedLanguageWidget(context, 'العربيه')
+                  : buildUnSelcetedLanguageWidget(context, 'العربيه'),
+            )
           ],
         ),
       ),
@@ -30,16 +52,13 @@ class LanguageBottomSheet extends StatelessWidget {
       children: [
         Text(
           text,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         Spacer(),
         Icon(
           Icons.check,
           size: 40,
-          color: Colors.white,
+          color: Theme.of(context).dividerColor,
         ),
       ],
     );
@@ -50,7 +69,7 @@ class LanguageBottomSheet extends StatelessWidget {
       children: [
         Text(
           text,
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ],
     );

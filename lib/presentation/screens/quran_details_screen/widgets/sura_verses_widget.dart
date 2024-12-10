@@ -12,7 +12,7 @@ class SuraVersesWidget extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           verse,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,
           textDirection: TextDirection.rtl,
         ),

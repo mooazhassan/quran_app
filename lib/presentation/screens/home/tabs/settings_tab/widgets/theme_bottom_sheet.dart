@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quran_app/providers/settings_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ThemeBottomSheet extends StatelessWidget {
   const ThemeBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var myProvider = Provider.of<SettingsProvider>(context);
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -14,11 +18,28 @@ class ThemeBottomSheet extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            buildSelcetedThemeWidget(context, 'Light'),
+            InkWell(
+                onTap: () {
+                  myProvider.changeAppTheme(ThemeMode.light);
+                },
+                child: myProvider.isLight()
+                    ? buildSelcetedThemeWidget(
+                        context, AppLocalizations.of(context)!.light)
+                    : buildUnSelcetedThemeWidget(
+                        context, AppLocalizations.of(context)!.light)),
             SizedBox(
               height: 20,
             ),
-            buildUnSelcetedThemeWidget(context, 'Dark')
+            InkWell(
+              onTap: () {
+                myProvider.changeAppTheme(ThemeMode.dark);
+              },
+              child: !myProvider.isLight()
+                  ? buildSelcetedThemeWidget(
+                      context, AppLocalizations.of(context)!.dark)
+                  : buildUnSelcetedThemeWidget(
+                      context, AppLocalizations.of(context)!.dark),
+            ),
           ],
         ),
       ),
@@ -30,17 +51,10 @@ class ThemeBottomSheet extends StatelessWidget {
       children: [
         Text(
           text,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         Spacer(),
-        Icon(
-          Icons.check,
-          size: 40,
-          color: Colors.white,
-        ),
+        Icon(Icons.check, size: 40, color: Theme.of(context).dividerColor),
       ],
     );
   }
@@ -50,7 +64,7 @@ class ThemeBottomSheet extends StatelessWidget {
       children: [
         Text(
           text,
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ],
     );
